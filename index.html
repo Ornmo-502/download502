@@ -306,6 +306,7 @@
             transform: translateY(20px);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .social-card::before {
@@ -817,6 +818,82 @@
             margin-left: 0.5rem;
         }
         
+        /* زر المصادر القانونية */
+        .resources-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #2e7d32, #4caf50);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resources-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .resources-btn:hover::before {
+            left: 100%;
+        }
+        
+        .resources-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* زر المبرمج */
+        .developer-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .developer-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .developer-btn:hover::before {
+            left: 100%;
+        }
+        
+        .developer-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(30px); }
@@ -878,6 +955,12 @@
             <p>يحمي الحقوق، ويعزز العدالة والمساواة. في أورنمو منبع القانون ⚖، ستجد كنزًا من المعرفة القانونية</p>
             <a href="#download" class="btn btn-gold pulse">تحميل التطبيق الآن</a>
             <a href="#features" class="btn">استكشاف المميزات</a>
+            <a href="https://ornmo-502.github.io/Locations-Resources/" target="_blank" class="resources-btn">
+                <i class="fas fa-external-link-alt"></i> المصادر القانونية الموثوقة
+            </a>
+            <a href="https://ornmo502.wordpress.com/" target="_blank" class="developer-btn">
+                <i class="fas fa-code"></i> مبرمج تطبيق أورنمو
+            </a>
         </div>
     </section>
     
@@ -886,41 +969,41 @@
         <div class="container">
             <h2 class="section-title">تواصل معنا على وسائل التواصل الاجتماعي</h2>
             <div class="social-container">
-                <div class="social-card">
+                <a href="https://www.facebook.com/share/19iXPBUUZU/" target="_blank" class="social-card">
                     <div class="social-icon facebook-icon">
                         <i class="fab fa-facebook-f"></i>
                     </div>
                     <h3>فيسبوك</h3>
                     <p>تابعنا على فيسبوك</p>
-                    <a href="https://www.facebook.com/share/19iXPBUUZU/" class="social-link" target="_blank">اذهب إلى الصفحة</a>
-                </div>
+                    <span class="social-link">اذهب إلى الصفحة</span>
+                </a>
                 
-                <div class="social-card">
+                <a href="https://t.me/Ornmo_502" target="_blank" class="social-card">
                     <div class="social-icon telegram-icon">
                         <i class="fab fa-telegram"></i>
                     </div>
                     <h3>تلغرام</h3>
                     <p>انضم إلى قناتنا</p>
-                    <a href="https://t.me/Ornmo_502" class="social-link" target="_blank">اذهب إلى القناة</a>
-                </div>
+                    <span class="social-link">اذهب إلى القناة</span>
+                </a>
                 
-                <div class="social-card">
+                <a href="https://youtube.com/@ornmo_502?si=k3Pm7nA7O2Tnz6Py" target="_blank" class="social-card">
                     <div class="social-icon youtube-icon">
                         <i class="fab fa-youtube"></i>
                     </div>
                     <h3>يوتيوب</h3>
                     <p>اشترك في قناتنا</p>
-                    <a href="https://youtube.com/@ornmo_502?si=k3Pm7nA7O2Tnz6Py" class="social-link" target="_blank">اذهب إلى القناة</a>
-                </div>
+                    <span class="social-link">اذهب إلى القناة</span>
+                </a>
                 
-                <div class="social-card">
+                <a href="https://www.instagram.com/ornmo_502?igsh=bjFtcGs3NjhkcHN4" target="_blank" class="social-card">
                     <div class="social-icon instagram-icon">
                         <i class="fab fa-instagram"></i>
                     </div>
                     <h3>إنستغرام</h3>
                     <p>تابعنا على إنستغرام</p>
-                    <a href="https://www.instagram.com/ornmo_502?igsh=bjFtcGs3NjhkcHN4" class="social-link" target="_blank">اذهب إلى الصفحة</a>
-                </div>
+                    <span class="social-link">اذهب إلى الصفحة</span>
+                </a>
             </div>
         </div>
     </section>
@@ -935,7 +1018,7 @@
                 </div>
                 <div class="feature-content">
                     <h3>البوابة القانونية</h3>
-                    <p>دليل شامل للقوانين والمستندات القانونية مع أكثر من 6000 مصدر قانوني</p>
+                    <p>دليل شامل للقوانين والمستندات القانونية مع أكثر من 15.000 مصدر قانوني</p>
                 </div>
             </div>
             
@@ -1002,7 +1085,7 @@
                 <p>يوفر تطبيق أورنمو منبع القانون بيئة متكاملة لكل ما تحتاجه في المجال القانوني</p>
                 
                 <ul>
-                    <li><i class="fas fa-check-circle"></i> أكثر من 6000 مصدر قانوني</li>
+                    <li><i class="fas fa-check-circle"></i> أكثر من 15.000 مصدر قانوني</li>
                     <li><i class="fas fa-check-circle"></i> كتب قانونية ووثائق وأطروحات</li>
                     <li><i class="fas fa-check-circle"></i> مقالات قانونية متخصصة</li>
                     <li><i class="fas fa-check-circle"></i> خدمات قانونية شاملة</li>
@@ -1054,6 +1137,8 @@
                         <li><a href="#features">المميزات</a></li>
                         <li><a href="#download">تحميل التطبيق</a></li>
                         <li><a href="https://t.me/Ornmo_502">قناة التلغرام</a></li>
+                        <li><a href="https://ornmo-502.github.io/Locations-Resources/" target="_blank">المصادر القانونية</a></li>
+                        <li><a href="https://ornmo502.wordpress.com/" target="_blank">مبرمج التطبيق</a></li>
                     </ul>
                 </div>
                 
