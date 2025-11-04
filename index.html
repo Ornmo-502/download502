@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أورنمو - منبع القانون واجهة التنزيل | إصدار إنفنتي لا نهائي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --accent-color: #3949ab;
+            --gold-color: #ffd700;
+            --light-color: #e8eaf6;
+            --dark-color: #121858;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --facebook: #3b5998;
+            --telegram: #0088cc;
+            --youtube: #ff0000;
+            --instagram: #e4405f;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        /* شريط التقدم */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold-color), var(--accent-color));
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--gold-color), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+            color: var(--gold-color);
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+        }
+        
+        /* قائمة الهامبرجر للجوّال */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 2rem;
+            height: 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .menu-toggle span {
+            width: 2rem;
+            height: 0.25rem;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s linear;
+            position: relative;
+            transform-origin: center;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        nav a:hover::before, nav a.active::before {
+            width: 100%;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--gold-color);
+        }
+        
+        /* زر العودة للأعلى */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 99;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--gold-color);
+            color: var(--dark-color);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(18, 24, 88, 0.85), rgba(26, 35, 126, 0.9)), url('https://i.postimg.cc/C5ntjHwd/IMG-20250806-WA0010.jpg') no-repeat center center/cover;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 215, 0, 0.2) 0%, transparent 50%);
+        }
+        
+        .hero-content {
+            width: 100%;
+            animation: fadeIn 1.5s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--gold-color);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin: 0.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-color), #ffed4e);
+            color: var(--dark-color);
+        }
+        
+        /* Social Media Section */
+        .social-section {
+            background: var(--light-color);
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .social-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            width: 220px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .social-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .social-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .social-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            height: 80px;
+            width: 80px;
+            line-height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+        
+        .social-card:hover .social-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .facebook-icon {
+            background: linear-gradient(135deg, var(--facebook), #2d4373);
+        }
+        
+        .telegram-icon {
+            background: linear-gradient(135deg, var(--telegram), #006e9c);
+        }
+        
+        .youtube-icon {
+            background: linear-gradient(135deg, var(--youtube), #cc0000);
+        }
+        
+        .instagram-icon {
+            background: linear-gradient(135deg, var(--instagram), #c13584);
+        }
+        
+        .social-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-size: 1.3rem;
+        }
+        
+        .social-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .social-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+        
+        .social-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Features Section */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-bottom: 1rem;
+            font-size: 2.2rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 5px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            text-align: center;
+            padding: 2rem;
+            border-top: 5px solid var(--accent-color);
+            opacity: 0;
+            transform: translateY(20px);
+            position: relative;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(57, 73, 171, 0.05), transparent);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+            color: var(--accent-color);
+        }
+        
+        .feature-content h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+            font-size: 1.4rem;
+        }
+        
+        .feature-content p {
+            color: #666;
+            line-height: 1.7;
+        }
+        
+        /* App Showcase */
+        .app-showcase {
+            background: var(--light-color);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .showcase-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .app-image {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            background: url('https://i.postimg.cc/C5ntjHwd/IMG-20250806-WA0010.jpg') no-repeat center center/cover;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 35, 126, 0.2), rgba(57, 73, 171, 0.2));
+        }
+        
+        .app-details {
+            flex: 1;
+            min-width: 300px;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+        
+        .app-showcase.visible .app-image,
+        .app-showcase.visible .app-details {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .app-details h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            line-height: 1.3;
+        }
+        
+        .app-details > p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        
+        .app-details ul {
+            list-style: none;
+            margin: 2rem 0;
+        }
+        
+        .app-details li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .app-details i {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Download Section */
+        .download-section {
+            text-align: center;
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+            background-size: cover;
+        }
+        
+        .download-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .download-section > p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .download-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 4rem 0 1.5rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--gold-color));
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.7rem;
+            color: var(--gold-color);
+            font-size: 1.4rem;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--gold-color);
+            transform: translateX(-5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                position: absolute;
+                top: 1.5rem;
+                left: 1rem;
+            }
+            
+            nav {
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            nav.active {
+                max-height: 300px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+            }
+            
+            nav li {
+                width: 100%;
+                text-align: center;
+            }
+            
+            nav a {
+                display: block;
+                padding: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .showcase-content {
+                flex-direction: column;
+            }
+            
+            .social-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .social-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        .university-badge {
+            background: linear-gradient(135deg, var(--gold-color), #ffed4e);
+            color: var(--dark-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 1.5rem 0;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التقدم -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-balance-scale"></i>
+                <h1>أورنمو - منبع القانون</h1>
+            </div>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home" class="active">الرئيسية</a></li>
+                    <li><a href="#features">المميزات</a></li>
+                    <li><a href="#social">وسائل التواصل</a></li>
+                    <li><a href="#download">تحميل التطبيق</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- زر العودة للأعلى -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h2>أورنمو منبع القانون – إصدار "إنفنتي لا نهائي"</h2>
+            <p>✨ القانون هو أساس المجتمع العادل ✨</p>
+            <p>يحمي الحقوق، ويعزز العدالة والمساواة. في أورنمو منبع القانون ⚖، ستجد كنزًا من المعرفة القانونية</p>
+            <a href="#download" class="btn btn-gold pulse">تحميل التطبيق الآن</a>
+            <a href="#features" class="btn">استكشاف المميزات</a>
+        </div>
+    </section>
+    
+    <!-- Social Media Section -->
+    <section class="social-section" id="social">
+        <div class="container">
+            <h2 class="section-title">تواصل معنا على وسائل التواصل الاجتماعي</h2>
+            <div class="social-container">
+                <div class="social-card">
+                    <div class="social-icon facebook-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <h3>فيسبوك</h3>
+                    <p>تابعنا على فيسبوك</p>
+                    <a href="https://www.facebook.com/share/19iXPBUUZU/" class="social-link" target="_blank">اذهب إلى الصفحة</a>
+                </div>
+                
+                <div class="social-card">
+                    <div class="social-icon telegram-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <h3>تلغرام</h3>
+                    <p>انضم إلى قناتنا</p>
+                    <a href="https://t.me/Ornmo_502" class="social-link" target="_blank">اذهب إلى القناة</a>
+                </div>
+                
+                <div class="social-card">
+                    <div class="social-icon youtube-icon">
+                        <i class="fab fa-youtube"></i>
+                    </div>
+                    <h3>يوتيوب</h3>
+                    <p>اشترك في قناتنا</p>
+                    <a href="https://youtube.com/@ornmo_502?si=k3Pm7nA7O2Tnz6Py" class="social-link" target="_blank">اذهب إلى القناة</a>
+                </div>
+                
+                <div class="social-card">
+                    <div class="social-icon instagram-icon">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3>إنستغرام</h3>
+                    <p>تابعنا على إنستغرام</p>
+                    <a href="https://www.instagram.com/ornmo_502?igsh=bjFtcGs3NjhkcHN4" class="social-link" target="_blank">اذهب إلى الصفحة</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="container" id="features">
+        <h2 class="section-title">مميزات التطبيق</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>البوابة القانونية</h3>
+                    <p>دليل شامل للقوانين والمستندات القانونية مع أكثر من 6000 مصدر قانوني</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-archive"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>أرشيف القوانين</h3>
+                    <p>استعرض القوانين الحالية والسابقة بكل سهولة</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>الأخبار القانونية</h3>
+                    <p>ابقَ على اطلاع على آخر التطورات القانونية</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>مسار دراسة القانون</h3>
+                    <p>4 مراحل دراسية متكاملة للوصول إلى الاحترافية في القانون</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>الخدمات القانونية</h3>
+                    <p>استشارات، مستندات قانونية، ترافع أمام المحاكم</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>المحاكم الافتراضية</h3>
+                    <p>تجربة قانونية رقمية مبتكرة عبر الإنترنت</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- App Showcase -->
+    <section class="app-showcase">
+        <div class="container showcase-content">
+            <div class="app-image">
+                <!-- صورة أورنمو -->
+            </div>
+            <div class="app-details">
+                <h2>اكتشف عالم القانون الشامل</h2>
+                <p>يوفر تطبيق أورنمو منبع القانون بيئة متكاملة لكل ما تحتاجه في المجال القانوني</p>
+                
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> أكثر من 6000 مصدر قانوني</li>
+                    <li><i class="fas fa-check-circle"></i> كتب قانونية ووثائق وأطروحات</li>
+                    <li><i class="fas fa-check-circle"></i> مقالات قانونية متخصصة</li>
+                    <li><i class="fas fa-check-circle"></i> خدمات قانونية شاملة</li>
+                    <li><i class="fas fa-check-circle"></i> محاكم افتراضية وتقارير قضايا</li>
+                    <li><i class="fas fa-check-circle"></i> بودكاست ومنتديات قانونية</li>
+                </ul>
+                
+                <div class="university-badge">
+                    برعاية زيد علي العلي و جامعة وارث الأنبياء
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Download Section -->
+    <section class="download-section" id="download">
+        <div class="container">
+            <h2>حمّل التطبيق الآن</h2>
+            <p>احصل على تجربة قانونية متكاملة مع إصدار "إنفنتي لا نهائي"</p>
+            
+            <div class="download-options">
+                <a href="https://apk.e-droid.net/apk/app3447695-gbn58d.apk?v=13" class="btn btn-gold">
+                    <i class="fas fa-download"></i> تحميل من e-droid
+                </a>
+                <a href="https://t.me/Ornmo_502/1052" class="btn btn-gold">
+                    <i class="fab fa-telegram"></i> تحميل من تلغرام
+                </a>
+                <a href="https://www.mediafire.com/file/fu0szi8a1y0uz7y/%25D8%25A3%25D9%2588%25D8%25B1%25D9%2586%25D9%2585%25D9%2588_%25D9%2585%25D9%2586%25D8%25A8%25D8%25B9_%25D8%25A7%25D9%2584%25D9%2582%25D8%25A7%25D9%2586%25D9%2588%25D9%2586_2026.apk/file" class="btn btn-gold">
+                    <i class="fas fa-download"></i> تحميل من ميديا فاير
+                </a>
+            </div>
+            
+            <p style="margin-top: 2rem; position: relative; z-index: 1;">تابعنا على: <a href="https://t.me/Ornmo_502" style="color: var(--gold-color); font-weight: bold;">قناة أورنمو على تلغرام</a></p>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>عن أورنمو</h3>
+                    <p>أورنمو منبع القانون هو تطبيق شامل يقدم محتوى قانونيًا متكاملًا برعاية زيد علي العلي و جامعة وارث الأنبياء</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">المميزات</a></li>
+                        <li><a href="#download">تحميل التطبيق</a></li>
+                        <li><a href="https://t.me/Ornmo_502">قناة التلغرام</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تابعنا</h3>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/share/19iXPBUUZU/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://t.me/Ornmo_502" target="_blank"><i class="fab fa-telegram"></i></a>
+                        <a href="https://youtube.com/@ornmo_502?si=k3Pm7nA7O2Tnz6Py" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.instagram.com/ornmo_502?igsh=bjFtcGs3NjhkcHN4" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة &copy; 2026 أورنمو - منبع القانون</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تفعيل قائمة الهامبرجر للجوّال
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            
+            // تحويل الأشرطة إلى X عند النشاط
+            const spans = menuToggle.querySelectorAll('span');
+            if (mainNav.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر على رابط
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+        
+        // شريط التقدم
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+            
+            // إظهار أو إخفاء زر العودة للأعلى
+            const backToTop = document.getElementById('backToTop');
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            
+            // تفعيل تأثيرات الظهور عند التمرير
+            animateOnScroll();
+        };
+        
+        // تأثيرات الظهور عند التمرير
+        function animateOnScroll() {
+            const socialCards = document.querySelectorAll('.social-card');
+            const featureCards = document.querySelectorAll('.feature-card');
+            const appShowcase = document.querySelector('.app-showcase');
+            
+            socialCards.forEach(card => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (cardPosition < screenPosition) {
+                    card.classList.add('visible');
+                }
+            });
+            
+            featureCards.forEach(card => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (cardPosition < screenPosition) {
+                    card.classList.add('visible');
+                }
+            });
+            
+            if (appShowcase) {
+                const showcasePosition = appShowcase.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                if (showcasePosition < screenPosition) {
+                    appShowcase.classList.add('visible');
+                }
+            }
+        }
+        
+        // تفعيل عند التحميل الأولي
+        document.addEventListener('DOMContentLoaded', function() {
+            animateOnScroll();
+            
+            // إضافة فئة active للرابط النشط
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            window.addEventListener('scroll', function() {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - 100)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
